@@ -1,28 +1,28 @@
 function add(a, b){
-    if(+a != NaN && +b != NaN) return +a + +b;
+    return +a + +b;
 }
 
 function subtract(a, b){
-    if(+a != NaN && +b != NaN) return +a - +b;
+    return +a - +b;
 }
 
 function multiply(a, b){
-    if(+a != NaN && +b != NaN) return +a * +b;
+    return +a * +b;
 }
 
 function divide(a, b){
-    if(+a != NaN && +b != NaN) return +a / +b;
+    return +a / +b;
 }
 
-let firstNumber = "";
-let secondNumber = "";
+let currentNumber = "";
 let operator = "";
+let result = "";
 
 function clearField(){
-    firstNumber = "";
-    secondNumber = "";
+    currentNumber = "";
+    result = "";
     operator = "";
-    updateField("Enter the equation")
+    updateField("Enter the equation");
 }
 
 function updateField(str){
@@ -30,46 +30,55 @@ function updateField(str){
     field.textContent = str;
 }
 
-function operate(first, second, op){
-    let result = "";
-    switch(op){
-        case "+":
-            result = add(first, second);
-            break;
-        case "-":
-            result = subtract(first, second);
-            break;
-        case "*":
-            result = multiply(first, second);
-            break;
-        case "/":
-            result = divide(first, second);
-            break;
+function operate(){
+    if (result == ""){
+        updateField(currentNumber);
+        return currentNumber;
     }
+    switch(operator){
+        case "+":
+            return add(result, currentNumber);
+        case "-":
+            return subtract(result, currentNumber);
+        case "*":
+            return multiply(result, currentNumber);
+        case "/":
+            return divide(result, currentNumber);
+    }    
+}
+
+function appendNumber(event){
+    const input = event.target.textContent;
+    currentNumber += input;
+    updateField(currentNumber)
+}
+
+function changeOperator(event){
+    if (operator == ""){
+        operator = event.target.textContent;
+        result = operate();
+    } else{
+        result = operate();
+        operator = event.target.textContent;
+    }
+    currentNumber = "";
     updateField(result);
 }
 
-function appendEquation(event){
-    if(Number.isInteger(+event.target.textContent)
-        && operator == ""){
-        firstNumber += event.target.textContent;
-    } else if (Number.isInteger(+event.target.textContent)) {
-        secondNumber += event.target.textContent;
-    } else {
-        operator = event.target.textContent;
-    }
-    let equation = firstNumber + operator + secondNumber;
-    updateField(equation)
+function enterEquation(){
+    updateField(operate())
 }
 
-numbers = document.querySelectorAll(".number");
+const numbers = document.querySelectorAll(".number");
+numbers.forEach(number => number.addEventListener('click', appendNumber))
 
-numbers.forEach(number => number.addEventListener('click', appendEquation))
+const operators = document.querySelectorAll('.operator')
+operators.forEach(operator => operator.addEventListener('click', changeOperator))
 
 const clearButton = document.querySelector('#clear');
 clearButton.addEventListener('click', clearField);
 
 const enterButton = document.querySelector('button#enter');
-enterButton.addEventListener('click', () => operate(firstNumber, secondNumber, operator))
+enterButton.addEventListener('click', enterEquation)
 
 clearField();
