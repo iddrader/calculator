@@ -1,0 +1,30 @@
+.calculator-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+}
+
+button {
+    padding: 6px;
+    width: 80px;
+    height: 80px;
+    background-color: #DBDFAA;
+    border: 1px solid #B3C890;
+}
+
+.display {
+    background-color: #F5F0BB;
+    border: 1px solid #B3C890;
+    height: 80px;
+    width: 320px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 900;
+    padding: 12px;
+    box-sizing: border-box;
+}
