@@ -12,7 +12,14 @@ button {
     width: 80px;
     height: 80px;
     background-color: #DBDFAA;
-    border: 1px solid #B3C890;
+    border: 2px solid #B3C890;
+    font-weight: bold;
+}
+
+button:hover {
+    transform: scale(1.1);
+    transition: 0.1s;
+    border: 5px #afbf80 solid;
 }
 
 .display {
